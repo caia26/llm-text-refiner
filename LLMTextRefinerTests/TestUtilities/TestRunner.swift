@@ -1,5 +1,6 @@
 import Foundation
 import XCTest
+@testable import LLMTextRefiner
 
 /// Test runner utility for organizing different types of tests
 class TestRunner {

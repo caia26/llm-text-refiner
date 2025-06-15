@@ -2,41 +2,6 @@ import XCTest
 @testable import LLMTextRefiner
 import Foundation
 
-// MARK: - Mock URLSession
-
-class MockURLSession: URLSession {
-    private let mockDataTask: MockURLSessionDataTask
-    
-    init(data: Data?, response: URLResponse?, error: Error?) {
-        mockDataTask = MockURLSessionDataTask(data: data, response: response, error: error)
-        super.init()
-    }
-    
-    override func data(for request: URLRequest) async throws -> (Data, URLResponse) {
-        if let error = mockDataTask.error {
-            throw error
-        }
-        
-        guard let data = mockDataTask.data, let response = mockDataTask.response else {
-            throw LLMServiceError.noResponse
-        }
-        
-        return (data, response)
-    }
-}
-
-class MockURLSessionDataTask {
-    let data: Data?
-    let response: URLResponse?
-    let error: Error?
-    
-    init(data: Data?, response: URLResponse?, error: Error?) {
-        self.data = data
-        self.response = response
-        self.error = error
-    }
-}
-
 // MARK: - LLMService Tests
 
 class LLMServiceTests: XCTestCase {
